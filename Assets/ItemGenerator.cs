@@ -18,7 +18,7 @@ public class ItemGenerator : MonoBehaviour
     private float posRange = 3.4f;
 
     //アイテム生成位置
-    private int createItemPos = 80;
+    private int createItemPos = 40;
     //unityちゃんのオブジェクトを入れる
     private GameObject unitychan;
 
@@ -34,7 +34,7 @@ public class ItemGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(createItemPos <= unitychan.transform.position.z && createItemPos < goalPos-40)
+        if(createItemPos <= unitychan.transform.position.z && createItemPos < goalPos-60)
         {
             //どのアイテムを出すのかをランダムに設定
             int num = Random.Range(1, 11);
@@ -44,7 +44,7 @@ public class ItemGenerator : MonoBehaviour
                 for (float j = -1; j <= 1; j += 0.4f)
                 {
                     GameObject cone = Instantiate(conePrefab);
-                    cone.transform.position = new Vector3(4 * j, cone.transform.position.y, createItemPos + 40);
+                    cone.transform.position = new Vector3(4 * j, cone.transform.position.y, createItemPos + 60);
                 }
             }
             else
@@ -62,13 +62,13 @@ public class ItemGenerator : MonoBehaviour
                     {
                         //コインを生成
                         GameObject coin = Instantiate(coinPrefab);
-                        coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, createItemPos + 40 + offsetZ);
+                        coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, createItemPos + 60 + offsetZ);
                     }
                     else if (7 <= item && item <= 9)
                     {
                         //車を生成
                         GameObject car = Instantiate(carPrefab);
-                        car.transform.position = new Vector3(posRange * j, car.transform.position.y, createItemPos + 40 + offsetZ);
+                        car.transform.position = new Vector3(posRange * j, car.transform.position.y, createItemPos + 60 + offsetZ);
                     }
                 }
             }

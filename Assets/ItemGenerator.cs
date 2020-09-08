@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class ItemGenerator : MonoBehaviour
 {
@@ -10,18 +11,30 @@ public class ItemGenerator : MonoBehaviour
     //conePrefabを入れる
     public GameObject conePrefab;
     //スタート地点
-    private int startPos = 80;
+    //private int startPos = 80;
     //ゴール地点
     private int goalPos = 360;
     //アイテムを出すx方向の範囲
     private float posRange = 3.4f;
 
+    //アイテム生成位置
+    private int createItemPos = 80;
+    //unityちゃんのオブジェクトを入れる
+    private GameObject unitychan;
+
 
     // Use this for initialization
     void Start()
     {
-        //一定の距離ごとにアイテムを生成
-        for (int i = startPos; i < goalPos; i += 15)
+        //unityちゃんのオブジェクト取得
+        this.unitychan = GameObject.Find("unitychan");
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(createItemPos <= unitychan.transform.position.z && createItemPos < goalPos-40)
         {
             //どのアイテムを出すのかをランダムに設定
             int num = Random.Range(1, 11);
@@ -31,7 +44,7 @@ public class ItemGenerator : MonoBehaviour
                 for (float j = -1; j <= 1; j += 0.4f)
                 {
                     GameObject cone = Instantiate(conePrefab);
-                    cone.transform.position = new Vector3(4 * j, cone.transform.position.y, i);
+                    cone.transform.position = new Vector3(4 * j, cone.transform.position.y, createItemPos + 40);
                 }
             }
             else
@@ -49,24 +62,18 @@ public class ItemGenerator : MonoBehaviour
                     {
                         //コインを生成
                         GameObject coin = Instantiate(coinPrefab);
-                        coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, i + offsetZ);
+                        coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, createItemPos + 40 + offsetZ);
                     }
                     else if (7 <= item && item <= 9)
                     {
                         //車を生成
                         GameObject car = Instantiate(carPrefab);
-                        car.transform.position = new Vector3(posRange * j, car.transform.position.y, i + offsetZ);
+                        car.transform.position = new Vector3(posRange * j, car.transform.position.y, createItemPos + 40 + offsetZ);
                     }
                 }
             }
+            //アイテム生成位置を進める
+            createItemPos += 15;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-   
 }
